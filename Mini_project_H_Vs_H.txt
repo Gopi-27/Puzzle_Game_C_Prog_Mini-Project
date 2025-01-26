@@ -1,0 +1,358 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+void DrawBoard(void);
+int Checking (void);
+int IsValidPos(int);
+int TossChecking(int);
+int IsValidMove(int ,int,char);
+void AskAgain(char);
+void Swapping(int,char *,char *);
+char Value[]="0123456789";
+	char p1pin;
+	char p2pin;
+	int move1,move2;
+void AskAgain(char ch){
+	    printf("Invalid Move\n");
+		printf("Enter Valid positions\n");
+		printf("Enter pin position (From Which):");
+		scanf(" %d",&move1);
+		printf("Enter pin position (To Which):");
+		scanf(" %d",&move2);
+		int ans=IsValidMove(move1,move2,ch);
+}
+void Swapping(int move,char *a,char *b){
+	char temp=*a;
+	*a=move+48;
+	*b=temp;
+}
+int IsValidMove(int p1,int p2,char pin){
+	if(p2==p1){
+		 	AskAgain(pin);
+	}else if(Value[p2]==p1pin|| Value[p2]==p2pin){
+		AskAgain(pin);
+	}else if(Value[p1]==pin){
+	switch(p1){
+		case 1:
+			if(p2==2 || p2==5 ||p2==4){
+					return 1;
+			}else{
+		 	AskAgain(pin);
+			}
+		 
+		break;
+		case 2:
+		 if(p2==1|| p2==5|| p2==3){
+			return 1;
+		 }else{
+		 AskAgain(pin);
+		 }
+		break;
+		case 3:
+		  if(p2==2|| p2==5|| p2==6){
+		  	return 1;
+		}else{
+		 	AskAgain(pin);
+		 }
+		break;
+		case 4: 
+		 if(p2==1|| p2==5|| p2==7){
+		 	return 1;
+		 }else{
+		 	AskAgain(pin);
+		 }
+		break;
+		case 5: 
+		 if(p2==1|| p2==2|| p2==3|| p2==4|| p2==6|| p2==7|| p2==8|| p2==9){
+				return 1;
+		 }else{
+		 	AskAgain(pin);
+		 }
+		break;
+		case 6: 
+		 if(p2==3|| p2==5|| p2==9){
+		   return 1;
+		 }else{
+		 	AskAgain(pin);
+		 }
+		break;
+		case 7: 
+		 if(p2==4|| p2==5|| p2==8){
+		 return 1;
+		 }else{
+		 	AskAgain(pin);
+		 }
+		break;
+		case 8: 
+		 if(p2==5|| p2==7|| p2==9){
+		 return 1;	
+		 }else{
+		 	AskAgain(pin);
+		 }
+		break;
+		case 9: 
+		 if(p2==5|| p2==6|| p2==8){
+		 return 1;
+		 }else{
+		 	AskAgain(pin);
+		 }
+		break;
+		default:
+		AskAgain(pin);
+		break;
+	}
+  }else{
+	AskAgain(pin);
+}
+}
+void DrawBoard(void){
+	printf("\t\t%c + + + + %c + + + + %c\n",Value[1],Value[2],Value[3]);
+	printf("\t\t+ x       +       x +\n");
+	printf("\t\t+   x     +     x   +\n");
+	printf("\t\t+     x   +   x     +\n");
+	printf("\t\t+       x + x       +\n");
+	printf("\t\t%c + + + + %c + + + + %c\n",Value[4],Value[5],Value[6]);
+	printf("\t\t+       x + x       +\n");
+	printf("\t\t+     x   +   x     +\n");
+	printf("\t\t+   x     +     x   +\n");
+	printf("\t\t+ x       +       x +\n");
+	printf("\t\t%c + + + + %c + + + + %c\n",Value[7],Value[8],Value[9]);
+}
+int Checking(void){
+	if(Value[1]==Value[2] && Value[2]==Value[3]){
+		return 0;
+	}else if(Value[3]==Value[4] && Value[4]==Value[5]){
+		return 0;
+	}else if(Value[7]==Value[8] && Value[8]==Value[9]){
+		return 0;
+	}else if(Value[1]==Value[4] && Value[4]==Value[7]){
+		return 0;
+	}else if(Value[2]==Value[5] && Value[5]==Value[8]){
+		return 0;
+	}else if(Value[3]==Value[6] && Value[6]==Value[9]){
+		return 0;
+	}else if(Value[1]==Value[5] && Value[5]==Value[9]){
+		return 0;
+	}else if(Value[3]==Value[5] && Value[5]==Value[7]){
+		return 0;
+	}else {
+		return 1;
+	}
+}
+int IsValidPos(int num){
+	if(num>0 && num<10 && Value[num]!=p1pin && Value[num]!=p2pin){
+		return num;
+	}else{
+		printf("Invalid Position:\n");
+		printf("Enter Valid Position:");
+		int pos;
+		scanf(" %d",&pos);
+		IsValidPos(pos);
+	}
+}
+int TossChecking(int choice){
+	if(choice==0 || choice==1){
+		return choice;
+	}else{
+		printf("Invalid Choice\n");
+		printf("Player-->1 Enter '0' for Heads or '1' for Tails:");
+		int p1toss;
+		scanf("%d",&p1toss);
+		TossChecking(p1toss);
+	}
+}
+int main(){
+	printf("Welcome to the Game\n");
+	printf("------Sample Board-------\n");
+	DrawBoard();
+	printf("-------------------\n");
+	printf("Let's Start the game\n");
+	printf("Let's Decide Who Will start the Game First\n");
+	srand(time(0));
+	int Toss=rand();
+	printf("Player-->1 Enter '0' for Heads or '1' for Tails:");
+	int p1toss;
+	scanf("%d",&p1toss);
+	p1toss=TossChecking(p1toss);
+	int starter;
+	if(p1toss==0 ){
+		if(Toss%2==0){
+			printf("Player-->1 Will Start the Game\n");
+			starter=1;
+		}else{
+			printf("Player-->2 Will Start the Game\n");
+			starter=2;
+		}
+	}else{
+		if(Toss%2!=0){
+			printf("Player-->1 Will Start the Game\n");
+			starter=1;
+		}else{
+			printf("Player-->2 Will Start the Game\n");
+			starter=2;
+		}
+	}
+	printf("--------------Toss is successfully completed-----------\n");
+	printf("Enter Player-->1  Pin:\n");
+	scanf(" %c",&p1pin);
+	printf("Enter Player-->2 Pin:\n");
+	scanf(" %c",&p2pin);
+	printf("----------------Pin's Selection is Succesfully Completed\n");
+	printf("Player-->1 Pin is %c\n",p1pin);
+	printf("Player-->2 Pin is %c\n",p2pin);
+	printf("---------------Let's go the Game---------------\n");
+		if(starter==1){
+			DrawBoard();
+			int pos;
+			printf("Player-->1:-Enter pin-1 position:");
+			scanf(" %d",&pos);
+			pos=IsValidPos(pos);
+			Value[pos]=p1pin;
+			DrawBoard();
+			printf("Player-->2:-Enterpin-1 position:");
+			scanf(" %d",&pos);
+			pos=IsValidPos(pos);
+			Value[pos]=p2pin;
+			DrawBoard();
+			printf("Player-->1:-Enter pin-2 position:");
+			scanf(" %d",&pos);
+			pos=IsValidPos(pos);
+			Value[pos]=p1pin;
+			DrawBoard();
+			printf("Player-->2:-Enter pin-2 position:");
+			scanf(" %d",&pos);
+			pos=IsValidPos(pos);
+			Value[pos]=p2pin;
+			DrawBoard();
+			printf("Player-->1:-Enter pin-3 position:");
+			scanf(" %d",&pos);
+			pos=IsValidPos(pos);
+			Value[pos]=p1pin;
+			int res=Checking();
+			if(res==0){
+				DrawBoard();
+				printf("Palyer-->1 Won the Game:\n");
+				printf("----------The Game is Over----------\n");
+				return 5;
+			}
+			DrawBoard();
+			printf("Player-->2:-Enter pin-3 position:");
+			scanf(" %d",&pos);
+			pos=IsValidPos(pos);
+			Value[pos]=p2pin;
+			res=Checking();
+			if(res==0){
+				DrawBoard();
+				printf("Palyer-->2 Won the Game:\n");
+				printf("----------The Game is Over----------\n");
+				return 5;
+			}
+		
+	}else{
+		int pos;
+		DrawBoard();
+			printf("Player-->2:-Enter pin-1 position:");
+			scanf(" %d",&pos);
+			pos=IsValidPos(pos);
+			Value[pos]=p2pin;
+			DrawBoard();
+			printf("Player-->1:-Enterpin-1 position:");
+			scanf(" %d",&pos);
+			pos=IsValidPos(pos);
+			Value[pos]=p1pin;
+			DrawBoard();
+			printf("Player-->2-Enter pin-2 position:");
+			scanf(" %d",&pos);
+			pos=IsValidPos(pos);
+			Value[pos]=p2pin;
+			DrawBoard();
+			printf("Player-->1:-Enter pin-2 position:");
+			scanf(" %d",&pos);
+			pos=IsValidPos(pos);
+			Value[pos]=p1pin;
+			DrawBoard();
+			printf("Player-->2:-Enter pin-3 position:");
+			scanf(" %d",&pos);
+			pos=IsValidPos(pos);
+			Value[pos]=p2pin;
+			int res=Checking();
+			if(res==0){
+				DrawBoard();
+				printf("Palyer-->2 Won the Game:\n");
+				printf("----------The Game is Over----------\n");
+				return 5;
+		   }
+		   DrawBoard();
+		   printf("Player-->1:-Enter pin-3 position:");
+		   scanf(" %d",&pos);
+		   pos=IsValidPos(pos);
+		   Value[pos]=p1pin;
+		   res=Checking();
+		   if(res==0){
+		   		DrawBoard();
+		   		printf("Palyer-->1 Won the Game:\n");
+				printf("----------The Game is Over----------\n");
+				return 5;
+		   }
+		   
+	}
+	printf("------------It's time to Move YOUR pins------------\n");
+	DrawBoard();
+	int ans;
+	if(starter==1){
+		while(Checking()==1){
+			printf("Player-->1 Enter pin position (from which):");
+			scanf("%d",&move1);
+			printf("Player-->1 Enter pin position (To Which):");
+			scanf("%d",&move2);
+			ans=IsValidMove(move1,move2,p1pin);
+			//swappping the characters
+			Swapping(move1,&Value[move1],&Value[move2]);
+			DrawBoard();
+			if(Checking()==0){
+				printf("Player-->1 Won The Game\n");
+				printf("----------The Game is Over-----------\n");
+				return 5;
+				break;
+			}
+			printf("Player-->2 Enter pin position (from which):");
+			scanf(" %d",&move1);
+			printf("Player-->2 Enter pin position (To Which):");
+			scanf("%d",&move2);
+			ans=IsValidMove(move1,move2,p2pin);
+			Swapping(move1,&Value[move1],&Value[move2]);
+			DrawBoard();	
+		}
+		printf("Player-->2 Won The Game\n");
+	    printf("----------The Game is Over-----------\n");
+		return 5;
+		
+	}else{
+		while(Checking()==1){
+			printf("Player-->2 Enter pin position (from which):");
+			scanf("%d",&move1);
+			printf("Player-->2 Enter pin position (To Which):");
+			scanf("%d",&move2);
+			ans=IsValidMove(move1,move2,p2pin);
+			Swapping(move1,&Value[move1],&Value[move2]);
+			DrawBoard();
+			if(Checking()==0){
+				printf("Player-->2 Won The Game\n");
+				printf("----------The Game is Over-----------\n");
+				return 5;
+				break;
+			}
+			printf("Player-->1 Enter pin position (from which):");
+			scanf("%d",&move1);
+			printf("Player-->1 Enter pin position (To Which):");
+			scanf("%d",&move2);
+			ans=IsValidMove(move1,move2,p1pin);	
+			Swapping(move1,&Value[move1],&Value[move2]);
+			DrawBoard();
+		}
+		printf("Player-->1 Won The Game\n");
+	    printf("----------The Game is Over-----------\n");
+		return 5;
+	}	
+	
+}

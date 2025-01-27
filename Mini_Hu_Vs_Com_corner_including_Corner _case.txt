@@ -1,0 +1,1813 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+// Updated Version of the Project
+char Value[]="0123456789";
+char p1name[]="Gopi";
+char p1pin='G';
+char cpin='C';
+char cmove1;
+char cmove2;
+int move1;
+int move2;
+void DrawBoard(void);
+int Checking(void);
+char IsValidPin(char);
+int TossChecking(int);
+int IsValidPos(int);
+int IsValidMove(int ,int,char);
+void AskAgain(char);
+void Swapping(int,char *,char *);
+int AskPinPos(void);
+void AskMove(void);
+void Cornercase1_3(void);
+void Cornercase1_7(void);
+void Cornercase7_9(void);
+void Cornercase3_9(void);
+int AskPinPos(void){
+	char ch;
+	printf(" '%s' It's Your Turn:\n",p1name);
+	printf("Enter Your Pin Position:");
+	scanf(" %c",&ch);
+	return ch-'0';
+}
+void DrawBoard(){
+	printf("\t\t%c + + + + %c + + + + %c\n",Value[1],Value[2],Value[3]);
+	printf("\t\t+ x       +       x +\n");
+	printf("\t\t+   x     +     x   +\n");
+	printf("\t\t+     x   +   x     +\n");
+	printf("\t\t+       x + x       +\n");
+	printf("\t\t%c + + + + %c + + + + %c\n",Value[4],Value[5],Value[6]);
+	printf("\t\t+       x + x       +\n");
+	printf("\t\t+     x   +   x     +\n");
+	printf("\t\t+   x     +     x   +\n");
+	printf("\t\t+ x       +       x +\n");
+	printf("\t\t%c + + + + %c + + + + %c\n",Value[7],Value[8],Value[9]);
+}
+int Checking(void){
+	if(Value[1]==Value[2] && Value[2]==Value[3]){
+		return 0;
+	}else if(Value[4]==Value[5] && Value[5]==Value[6]){
+		return 0;
+	}else if(Value[7]==Value[8] && Value[8]==Value[9]){
+		return 0;
+	}else if(Value[1]==Value[4] && Value[4]==Value[7]){
+		return 0;
+	}else if(Value[2]==Value[5] && Value[5]==Value[8]){
+		return 0;
+	}else if(Value[3]==Value[6] && Value[6]==Value[9]){
+		return 0;
+	}else if(Value[1]==Value[5] && Value[5]==Value[9]){
+		return 0;
+	}else if(Value[3]==Value[5] && Value[5]==Value[7]){
+		return 0;
+	}else {
+		return 1;
+	}
+}
+int IsValidPos(int num){
+	if(num>0 && num<10 && Value[num]!=p1pin && Value[num]!=cpin){
+		return num;
+	}else{
+		printf("Invalid Position:\n");
+		printf("'%s' Enter Valid Position:",p1name);
+		char ch;
+		scanf(" %c",&ch);
+		int pos=ch-'0';
+		return IsValidPos(pos);
+	}
+}
+void AskAgain(char ch){
+	    printf("'%s' Invalid Move\n",p1name);
+		printf("Enter Valid positions\n");
+		printf("Enter pin position (From Which):");
+		scanf(" %c",&cmove1);
+		printf("Enter pin position (To Which):");
+		scanf(" %c",&cmove2);
+		move1=cmove1-'0';
+		move2=cmove2-'0';
+		int ans=IsValidMove(move1,move2,ch);
+}
+void Swapping(int move,char *a,char *b){
+	char temp=*a;
+	*a=move+48;
+	*b=temp;
+}
+int IsValidMove(int p1,int p2,char pin){
+	if(p2==p1){
+		 	AskAgain(pin);
+	}else if(Value[p2]==p1pin|| Value[p2]==cpin){
+		AskAgain(pin);
+	}else if(Value[p1]==pin){
+	switch(p1){
+		case 1:
+			if(p2==2 || p2==5 ||p2==4){
+					return 1;
+			}else{
+		 	AskAgain(pin);
+			}
+		 
+		break;
+		case 2:
+		 if(p2==1|| p2==5|| p2==3){
+			return 1;
+		 }else{
+		 AskAgain(pin);
+		 }
+		break;
+		case 3:
+		  if(p2==2|| p2==5|| p2==6){
+		  	return 1;
+		}else{
+		 	AskAgain(pin);
+		 }
+		break;
+		case 4: 
+		 if(p2==1|| p2==5|| p2==7){
+		 	return 1;
+		 }else{
+		 	AskAgain(pin);
+		 }
+		break;
+		case 5: 
+		 if(p2==1|| p2==2|| p2==3|| p2==4|| p2==6|| p2==7|| p2==8|| p2==9){
+				return 1;
+		 }else{
+		 	AskAgain(pin);
+		 }
+		break;
+		case 6: 
+		 if(p2==3|| p2==5|| p2==9){
+		   return 1;
+		 }else{
+		 	AskAgain(pin);
+		 }
+		break;
+		case 7: 
+		 if(p2==4|| p2==5|| p2==8){
+		 return 1;
+		 }else{
+		 	AskAgain(pin);
+		 }
+		break;
+		case 8: 
+		 if(p2==5|| p2==7|| p2==9){
+		 return 1;	
+		 }else{
+		 	AskAgain(pin);
+		 }
+		break;
+		case 9: 
+		 if(p2==5|| p2==6|| p2==8){
+		 return 1;
+		 }else{
+		 	AskAgain(pin);
+		 }
+		break;
+		default:
+		AskAgain(pin);
+		break;
+	}
+  }else{
+	AskAgain(pin);
+}
+}
+void AskMove(void){
+	printf("'%s' It's Your Turn:\n",p1name);
+	printf("Enter Pin Position (From Which):");
+	scanf(" %c",&cmove1);
+	printf("Enter Pin Position (To Which):");
+	scanf(" %c",&cmove2);
+	move1=cmove1-'0';
+	move2=cmove2-'0';
+	
+}
+void DeclareWinner(int line){
+	if(Checking()==0){
+		printf("----------------Computer won The Game-------------\n");
+		printf("----------------The Game is Over------------------\n");
+		return ;
+		 }else {
+		printf("Error Occured in %d case check it\n",line);
+	 	return ;
+	 }
+}
+int main(){
+	printf("--------------Welcome To The Game----------------\n");
+	DrawBoard();
+	int pos1,pos2,pos3,ans;
+	 pos1=AskPinPos();
+    pos1=IsValidPos(pos1);
+    Value[pos1]=p1pin;
+    DrawBoard();
+    
+    printf("It's Computer Turn:\n");
+  	switch(pos1){
+  		case 2:
+  			printf("Computer Pin-->1 Position is:5\n");
+  			Value[5]=cpin;
+  			DrawBoard();
+  			pos2=AskPinPos();
+  			pos2=IsValidPos(pos2);
+  			Value[pos2]=p1pin;
+  			DrawBoard();
+  			printf("It's Computer Turn:\n");
+  			switch(pos2){
+  				case 1:
+  					printf("Computer Pin-->2 Position is:3\n");
+  					Value[3]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==7){
+  						printf("Computer Pin-->3 Position is: 9\n");
+  						Value[9]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 6\n");
+  						Swapping(5,&Value[5],&Value[6]);
+  						DrawBoard();
+  						DeclareWinner(219);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 7\n");
+					  	Value[7]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(217);
+					  }
+  					
+  			    break;
+  			    case 3:
+  			    	printf("Computer Pin-->2 Position is:1\n");
+  					Value[1]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==9){
+  						printf("Computer Pin-->3 Position is: 7\n");
+  						Value[7]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 4\n");
+  						Swapping(5,&Value[5],&Value[4]);
+  						DrawBoard();
+  						DeclareWinner(237);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 9\n");
+					  	Value[9]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(239);
+				}
+  			    break;
+  			    case 4:
+  			    	printf("Computer Pin-->2 Position is:9\n");
+  					Value[9]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==1){
+  						printf("Computer Pin-->3 Position is: 7\n");
+  						Value[7]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 8\n");
+  						Swapping(5,&Value[5],&Value[8]);
+  						DrawBoard();
+  						DeclareWinner(247);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 1\n");
+					  	Value[1]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(241);
+				}
+  			    break;
+  			    case 6:
+  			    	printf("Computer Pin-->2 Position is:7\n");
+  					Value[7]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==3){
+  						printf("Computer Pin-->3 Position is: 9\n");
+  						Value[9]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 8\n");
+  						Swapping(5,&Value[5],&Value[8]);
+  						DrawBoard();
+  						DeclareWinner(237);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 3\n");
+					  	Value[3]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(239);
+				}
+  			    break;
+  			    case 9:
+  			    	printf("Computer Pin-->2 Position is:7\n");
+  					Value[7]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==3){
+  						printf("Computer Pin-->3 Position is: 1\n");
+  						Value[1]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 4\n");
+  						Swapping(5,&Value[5],&Value[4]);
+  						DrawBoard();
+  						DeclareWinner(291);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 3\n");
+					  	Value[3]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(293);
+				}
+  			    break;
+  			    default :
+  			    		printf("Computer Pin-->2 Position is:9\n");
+  					Value[9]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==1){
+  						printf("Computer Pin-->3 Position is: 3\n");
+  						Value[3]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 6\n");
+  						Swapping(5,&Value[5],&Value[6]);
+  						DrawBoard();
+  						DeclareWinner(273);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 1\n");
+					  	Value[1]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(271);
+				}
+  			    break;
+			  
+			  }
+  			break;
+  			
+  		case 4:
+  			printf("Computer Pin-->1 Position is:5\n");
+  			Value[5]=cpin;
+  			DrawBoard();
+  			pos2=AskPinPos();
+  			pos2=IsValidPos(pos2);
+  			Value[pos2]=p1pin;
+  			DrawBoard();
+  			printf("It's Computer Turn:\n");
+  			if(pos2==1 || pos2==6){
+  					printf("Computer Pin-->2 Position is:7\n");
+  					Value[7]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==3){
+  						printf("Computer Pin-->3 Position is: 9\n");
+  						Value[9]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 8\n");
+  						Swapping(5,&Value[5],&Value[8]);
+  						DrawBoard();
+  						DeclareWinner(419);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 3\n");
+					  	Value[3]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(413);
+				}	
+			  }else if(pos2==2 || pos2== 3){
+			  		printf("Computer Pin-->2 Position is:9\n");
+  					Value[9]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==1){
+  						printf("Computer Pin-->3 Position is: 7\n");
+  						Value[7]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 8\n");
+  						Swapping(5,&Value[5],&Value[8]);
+  						DrawBoard();
+  						DeclareWinner(427);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 1\n");
+					  	Value[1]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(421);
+				}
+			  }else if(pos2==7 || pos2== 8){
+			  		printf("Computer Pin-->2 Position is:1\n");
+  					Value[1]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==9){
+  						printf("Computer Pin-->3 Position is: 3\n");
+  						Value[3]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 2\n");
+  						Swapping(5,&Value[5],&Value[2]);
+  						DrawBoard();
+  						DeclareWinner(473);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 9\n");
+					  	Value[9]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(479);
+				}
+			  }else {
+			  		printf("Computer Pin-->2 Position is:3\n");
+  					Value[3]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==7){
+  						printf("Computer Pin-->3 Position is: 1\n");
+  						Value[1]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 2\n");
+  						Swapping(5,&Value[5],&Value[2]);
+  						DrawBoard();
+  						DeclareWinner(491);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 7\n");
+					  	Value[7]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(497);
+				}
+			  }
+  			break;
+  			
+  		case 6:
+  			printf("Computer Pin-->1 Position is:5\n");
+  			Value[5]=cpin;
+  			DrawBoard();
+  			pos2=AskPinPos();
+  			pos2=IsValidPos(pos2);
+  			Value[pos2]=p1pin;
+  			DrawBoard();
+  			printf("It's Computer Turn:\n");
+  			if(pos2==1 || pos2==2 || pos2==4){
+  				printf("Computer Pin-->2 Position is:7\n");
+  					Value[7]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==3){
+  						printf("Computer Pin-->3 Position is: 9\n");
+  						Value[9]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 8\n");
+  						Swapping(5,&Value[5],&Value[8]);
+  						DrawBoard();
+  						DeclareWinner(619);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 3\n");
+					  	Value[3]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(613);
+				}
+			  }else if(pos2==3){
+			  	printf("Computer Pin-->2 Position is:9\n");
+  					Value[9]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==1){
+  						printf("Computer Pin-->3 Position is: 7\n");
+  						Value[7]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 8\n");
+  						Swapping(5,&Value[5],&Value[8]);
+  						DrawBoard();
+  						DeclareWinner(637);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 1\n");
+					  	Value[1]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(631);
+				}
+			  }else if(pos2==7 || pos2==8){
+			  	printf("Computer Pin-->2 Position is:1\n");
+  					Value[1]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==9){
+  						printf("Computer Pin-->3 Position is: 3\n");
+  						Value[3]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 2\n");
+  						Swapping(5,&Value[5],&Value[2]);
+  						DrawBoard();
+  						DeclareWinner(673);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 9\n");
+					  	Value[9]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(679);
+				}
+			  }else{
+			  	printf("Computer Pin-->2 Position is:3\n");
+  					Value[3]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==7){
+  						printf("Computer Pin-->3 Position is: 1\n");
+  						Value[1]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 2\n");
+  						Swapping(5,&Value[5],&Value[2]);
+  						DrawBoard();
+  						DeclareWinner(691);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 7\n");
+					  	Value[7]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(697);
+				}
+			  }
+  			break;
+  			
+  		case 8:
+  			printf("Computer Pin-->1 Position is:5\n");
+  			Value[5]=cpin;
+  			DrawBoard();
+  			pos2=AskPinPos();
+  			pos2=IsValidPos(pos2);
+  			Value[pos2]=p1pin;
+  			DrawBoard();
+  			printf("It's Computer Turn:\n");
+  			if(pos2==1 || pos2==2 ||pos2==4){
+  				printf("Computer Pin-->2 Position is:3\n");
+  					Value[3]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==7){
+  						printf("Computer Pin-->3 Position is: 9\n");
+  						Value[9]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 6\n");
+  						Swapping(5,&Value[5],&Value[6]);
+  						DrawBoard();
+  						DeclareWinner(819);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 7\n");
+					  	Value[7]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(817);
+				}
+			  }else if(pos2==3 || pos2==6){
+			  	printf("Computer Pin-->2 Position is:1\n");
+  					Value[1]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==9){
+  						printf("Computer Pin-->3 Position is: 7\n");
+  						Value[7]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 4\n");
+  						Swapping(5,&Value[5],&Value[4]);
+  						DrawBoard();
+  						DeclareWinner(837);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 9\n");
+					  	Value[9]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(839);
+				}
+			  }else if(pos2==7){
+			  	printf("Computer Pin-->2 Position is:9\n");
+  					Value[9]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==1){
+  						printf("Computer Pin-->3 Position is: 3\n");
+  						Value[3]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 6\n");
+  						Swapping(5,&Value[5],&Value[6]);
+  						DrawBoard();
+  						DeclareWinner(873);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 1\n");
+					  	Value[1]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(871);
+				}
+			  }else{
+			  	printf("Computer Pin-->2 Position is:7\n");
+  					Value[7]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==3){
+  						printf("Computer Pin-->3 Position is: 1\n");
+  						Value[1]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 4\n");
+  						Swapping(5,&Value[5],&Value[4]);
+  						DrawBoard();
+  						DeclareWinner(691);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 3\n");
+					  	Value[3]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(893);
+				}
+			  }
+  			break;
+  			//corner cases
+  		case 1:
+  			printf("Computer Pin-->1 Position is:5\n");
+  			Value[5]=cpin;
+  			DrawBoard();
+  			pos2=AskPinPos();
+  			pos2=IsValidPos(pos2);
+  			Value[pos2]=p1pin;
+  			DrawBoard();
+  			printf("It's Computer Turn:\n");
+  			switch(pos2){
+  				case 3:
+  				//	printf("Temperarly YOU Won The game");
+  					//code need to be write;
+  				printf("Computer Pin-->2 Position is : 2\n");
+  				Value[2]=cpin;
+  				DrawBoard();
+  				pos3=AskPinPos();
+  				pos3=IsValidPos(pos3);
+  				Value[pos3]=p1pin;
+  				DrawBoard();
+  				printf("It's Computer Turn\n");
+  				if(pos3!=8){
+  					printf("Computer Pin-->3 Position : 8\n");
+  					Value[8]=cpin;
+  					DrawBoard();
+  					DeclareWinner(11);
+  					return 5;
+				  }
+  				printf("Computer Pin-->3 Position is: 9\n");
+  				Value[9]=cpin;
+  				DrawBoard();
+  				printf("---------It's Time to MOVE OUR PINs---------\n");
+  				AskMove();
+  				ans=IsValidMove(move1,move2,p1pin);
+  				Swapping(move1,&Value[move1],&Value[move2]);
+  				DrawBoard();
+  				if(move1==1 && move2==4){
+  					printf("It's Computer Turn\n");
+  					printf("Computer Pin Position (From Which): 2\n");
+  					printf("Computer Pin Postion (To Which ): 1\n");
+  					Swapping(2,&Value[2],&Value[1]);
+  					DrawBoard();
+  					DeclareWinner(11);
+				  }else if(move1==8 && move2==7){
+				  	 printf("It's Computer Turn\n");
+  					printf("Computer Pin Position (From Which): 9\n");
+  					printf("Computer Pin Postion (To Which ): 8\n");
+  					Swapping(9,&Value[9],&Value[8]);
+  					DrawBoard();
+  					DeclareWinner(11);
+				  }else{
+				  	Cornercase1_3();
+				  }
+  					
+  					break;
+  				case 4:
+  					printf("Computer Pin-->2 Position is:7\n");
+  					Value[7]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==3){
+  						printf("Computer Pin-->3 Position is: 9\n");
+  						Value[9]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 8\n");
+  						Swapping(5,&Value[5],&Value[8]);
+  						DrawBoard();
+  						DeclareWinner(149);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 3\n");
+					  	Value[3]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(143);
+				}
+  					break;
+  				case 7:
+  				//	printf("Temperarly YOU Won The game");
+  					//code need to be write;
+  		    	printf("Computer Pin-->2 Position is : 4\n");
+  				Value[4]=cpin;
+  				DrawBoard();
+  				pos3=AskPinPos();
+  				pos3=IsValidPos(pos3);
+  				Value[pos3]=p1pin;
+  				DrawBoard();
+  				printf("It's Computer Turn\n");
+  				if(pos3!=6){
+  					printf("Computer Pin-->3 Position is : 6\n");
+  					Value[6]=cpin;
+  					DrawBoard();
+  					DeclareWinner(11);
+  					return 5;
+				  }
+  				printf("Computer Pin-->3 Position : 3\n");
+  				Value[3]=cpin;
+  				DrawBoard();
+  				printf("---------It's Time to MOVE OUR PINs---------\n");
+  				AskMove();
+  				ans=IsValidMove(move1,move2,p1pin);
+  				Swapping(move1,&Value[move1],&Value[move2]);
+  				DrawBoard();
+  				if(move1==7 && move2==8){
+  					printf("It's Computer Turn\n");
+  					printf("Computer Pin Position (From Which): 4\n");
+  					printf("Computer Pin Postion (To Which ): 7\n");
+  					Swapping(4,&Value[4],&Value[7]);
+  					DrawBoard();
+  					DeclareWinner(11);
+				  }else if(move1==6 && move2==9){
+				  	 printf("It's Computer Turn\n");
+  					printf("Computer Pin Position (From Which): 6\n");
+  					printf("Computer Pin Postion (To Which ): 9\n");
+  					Swapping(6,&Value[6],&Value[9]);
+  					DrawBoard();
+  					DeclareWinner(11);
+				  }else{
+				  	Cornercase1_7();
+				  }
+  					
+  					break;
+  				case 9:
+  					printf("Computer Pin-->2 Position is:2\n");
+  					Value[2]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==8){
+  						printf("Computer Pin-->3 Position is: 7\n");
+  						Value[7]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 2\n");
+  						printf("Computer Pin Position (To Which): 3\n");
+  						Swapping(2,&Value[2],&Value[3]);
+  						DrawBoard();
+  						DeclareWinner(197);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 8\n");
+					  	Value[8]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(198);
+				}
+  					break;
+  				case 6:
+  					printf("Computer Pin-->2 Position is:8\n");
+  					Value[8]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==2){
+  						printf("Computer Pin-->3 Position is: 3\n");
+  						Value[3]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 8\n");
+  						printf("Computer Pin Position (To Which): 7\n");
+  						Swapping(8,&Value[8],&Value[7]);
+  						DrawBoard();
+  						DeclareWinner(163);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 2\n");
+					  	Value[2]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(162);
+				}
+  					break;
+  				default :
+  					printf("Computer Pin-->2 Position is:3\n");
+  					Value[3]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==7){
+  						printf("Computer Pin-->3 Position is: 9\n");
+  						Value[9]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 6\n");
+  						Swapping(5,&Value[5],&Value[6]);
+  						DrawBoard();
+  						DeclareWinner(189);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 7\n");
+					  	Value[7]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(187);
+				}
+  					break;
+			  }
+  			break;
+  			
+  		case 3:
+  			printf("Computer Pin-->1 Position is:5\n");
+  			Value[5]=cpin;
+  			DrawBoard();
+  			pos2=AskPinPos();
+  			pos2=IsValidPos(pos2);
+  			Value[pos2]=p1pin;
+  			DrawBoard();
+  			printf("It's Computer Turn:\n");
+  			switch(pos2){
+  				case 1:
+  					//printf("Temperarly YOU Won The game");
+  					//code need to be write;
+  				printf("Computer Pin-->2 Position is : 2\n");
+  				Value[2]=cpin;
+  				DrawBoard();
+  				pos3=AskPinPos();
+  				pos3=IsValidPos(pos3);
+  				Value[pos3]=p1pin;
+  				DrawBoard();
+  				printf("It's Computer Turn\n");
+  				if(pos3!=8){
+  					printf("Computer Pin-->3 Position : 8\n");
+  					Value[8]=cpin;
+  					DrawBoard();
+  					DeclareWinner(11);
+  					return 5;
+				  }
+  				printf("Computer Pin-->3 Position is: 9\n");
+  				Value[9]=cpin;
+  				DrawBoard();
+  				printf("---------It's Time to MOVE OUR PINs---------\n");
+  				AskMove();
+  				ans=IsValidMove(move1,move2,p1pin);
+  				Swapping(move1,&Value[move1],&Value[move2]);
+  				DrawBoard();
+  				if(move1==1 && move2==4){
+  					printf("It's Computer Turn\n");
+  					printf("Computer Pin Position (From Which): 2\n");
+  					printf("Computer Pin Postion (To Which ): 1\n");
+  					Swapping(2,&Value[2],&Value[1]);
+  					DrawBoard();
+  					DeclareWinner(11);
+				  }else if(move1==8 && move2==7){
+				  	 printf("It's Computer Turn\n");
+  					printf("Computer Pin Position (From Which): 9\n");
+  					printf("Computer Pin Postion (To Which ): 8\n");
+  					Swapping(9,&Value[9],&Value[8]);
+  					DrawBoard();
+  					DeclareWinner(11);
+				  }else{
+				  	Cornercase1_3();
+				  }
+  					break;
+  				case 2:
+  					printf("Computer Pin-->2 Position is:1\n");
+  					Value[1]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==9){
+  						printf("Computer Pin-->3 Position is: 7\n");
+  						Value[7]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 4\n");
+  						Swapping(5,&Value[5],&Value[4]);
+  						DrawBoard();
+  						DeclareWinner(327);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 9\n");
+					  	Value[9]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(329);
+				}
+  					break;
+  				case 6:
+  					printf("Computer Pin-->2 Position is:9\n");
+  					Value[9]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==1){
+  						printf("Computer Pin-->3 Position is: 7\n");
+  						Value[7]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 8\n");
+  						Swapping(5,&Value[5],&Value[8]);
+  						DrawBoard();
+  						DeclareWinner(367);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 1\n");
+					  	Value[1]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(361);
+				}
+  					break;
+  				case 8:
+  					printf("Computer Pin-->2 Position is:4\n");
+  					Value[4]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==6){
+  						printf("Computer Pin-->3 Position is: 9\n");
+  						Value[9]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 4\n");
+  						printf("Computer Pin Position (To Which): 1\n");
+  						Swapping(4,&Value[4],&Value[1]);
+  						DrawBoard();
+  						DeclareWinner(389);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 6\n");
+					  	Value[6]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(386);
+				}
+  					break;
+				case 9:
+					//printf("Temperarly YOU Won The game");
+  					//code need to be write;
+  				printf("Computer Pin-->2 Position is : 6\n");
+  				Value[6]=cpin;
+  				DrawBoard();
+  				pos3=AskPinPos();
+  				pos3=IsValidPos(pos3);
+  				Value[pos3]=p1pin;
+  				DrawBoard();
+  				printf("It's Computer Turn\n");
+  				if(pos3!=4){
+  					printf("Computer Pin-->3 Position is : 4\n");
+  					Value[4]=cpin;
+  					DrawBoard();
+  					DeclareWinner(11);
+  					return 5;
+				  }
+  				printf("Computer Pin-->3 Position : 7\n");
+  				Value[7]=cpin;
+  				DrawBoard();
+  				printf("---------It's Time to MOVE OUR PINs---------\n");
+  				AskMove();
+  				ans=IsValidMove(move1,move2,p1pin);
+  				Swapping(move1,&Value[move1],&Value[move2]);
+  				DrawBoard();
+  				if(move1==3 && move2==2){
+  					printf("It's Computer Turn\n");
+  					printf("Computer Pin Position (From Which): 6\n");
+  					printf("Computer Pin Postion (To Which ): 3\n");
+  					Swapping(6,&Value[6],&Value[3]);
+  					DrawBoard();
+  					DeclareWinner(11);
+				  }else if(move1==4 && move2==1){
+				  	 printf("It's Computer Turn\n");
+  					printf("Computer Pin Position (From Which): 7\n");
+  					printf("Computer Pin Postion (To Which ): 4\n");
+  					Swapping(7,&Value[7],&Value[4]);
+  					DrawBoard();
+  					DeclareWinner(11);
+				  }else{
+				  	Cornercase3_9();
+				  }
+  					break;
+				default :
+				printf("Computer Pin-->2 Position is:8\n");
+  					Value[8]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==2){
+  						printf("Computer Pin-->3 Position is: 1\n");
+  						Value[1]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 8\n");
+  						printf("Computer Pin Position (To Which): 9\n");
+  						Swapping(8,&Value[8],&Value[9]);
+  						DrawBoard();
+  						DeclareWinner(371);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 2\n");
+					  	Value[2]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(372);
+				}	
+				break;	
+  				
+  					
+			  }
+			  
+  			break;
+  			
+  		case 7:
+  			printf("I am going to win the game");
+  			//code need to be write;
+  			break;
+  			
+  		case 9:
+  			printf("Computer Pin-->1 Position is:5\n");
+  			Value[5]=cpin;
+  			DrawBoard();
+  			pos2=AskPinPos();
+  			pos2=IsValidPos(pos2);
+  			Value[pos2]=p1pin;
+  			DrawBoard();
+  			printf("It's Computer Turn:\n");
+  			switch(pos2){
+  				case 2:
+  				printf("Computer Pin-->2 Position is:4\n");
+  					Value[4]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==6){
+  						printf("Computer Pin-->3 Position is: 3\n");
+  						Value[3]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 4\n");
+  						printf("Computer Pin Position (To Which): 7\n");
+  						Swapping(4,&Value[4],&Value[7]);
+  						DrawBoard();
+  						DeclareWinner(923);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 6\n");
+					  	Value[6]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(926);
+				}	
+  					break;
+  				case 3:
+  				//printf("Temperarly YOU Won The game");
+  					//code need to be write;
+					  printf("Computer Pin-->2 Position is : 6\n");
+  				Value[6]=cpin;
+  				DrawBoard();
+  				pos3=AskPinPos();
+  				pos3=IsValidPos(pos3);
+  				Value[pos3]=p1pin;
+  				DrawBoard();
+  				printf("It's Computer Turn\n");
+  				if(pos3!=4){
+  					printf("Computer Pin-->3 Position is : 4\n");
+  					Value[4]=cpin;
+  					DrawBoard();
+  					DeclareWinner(11);
+  					return 5;
+				  }
+  				printf("Computer Pin-->3 Position : 7\n");
+  				Value[7]=cpin;
+  				DrawBoard();
+  				printf("---------It's Time to MOVE OUR PINs---------\n");
+  				AskMove();
+  				ans=IsValidMove(move1,move2,p1pin);
+  				Swapping(move1,&Value[move1],&Value[move2]);
+  				DrawBoard();
+  				if(move1==3 && move2==2){
+  					printf("It's Computer Turn\n");
+  					printf("Computer Pin Position (From Which): 6\n");
+  					printf("Computer Pin Postion (To Which ): 3\n");
+  					Swapping(6,&Value[6],&Value[3]);
+  					DrawBoard();
+  					DeclareWinner(11);
+				  }else if(move1==4 && move2==1){
+				  	 printf("It's Computer Turn\n");
+  					printf("Computer Pin Position (From Which): 7\n");
+  					printf("Computer Pin Postion (To Which ): 4\n");
+  					Swapping(7,&Value[7],&Value[4]);
+  					DrawBoard();
+  					DeclareWinner(11);
+				  }else{
+				  	Cornercase3_9();
+				  }	
+  				    break;
+  				case 6:
+  					printf("Computer Pin-->2 Position is:3\n");
+  					Value[3]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==7){
+  						printf("Computer Pin-->3 Position is: 1\n");
+  						Value[1]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 2\n");
+  						Swapping(5,&Value[5],&Value[2]);
+  						DrawBoard();
+  						DeclareWinner(961);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 7\n");
+					  	Value[7]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(967);
+				}	
+  					break;
+  				case 7:
+  					//printf("Temperarly YOU Won The game");
+  					//code need to be write;
+  				printf("Computer Pin-->2 Position is : 8\n");
+  				Value[8]=cpin;
+  				DrawBoard();
+  				pos3=AskPinPos();
+  				pos3=IsValidPos(pos3);
+  				Value[pos3]=p1pin;
+  				DrawBoard();
+  				printf("It's Computer Turn\n");
+  				if(pos3!=2){
+  					printf("Computer Pin-->3 Position is : 2\n");
+  					Value[2]=cpin;
+  					DrawBoard();
+  					DeclareWinner(11);
+  					return 5;
+				  }
+  				printf("Computer Pin-->3 Position : 1\n");
+  				Value[1]=cpin;
+  				DrawBoard();
+  				printf("---------It's Time to MOVE OUR PINs---------\n");
+  				AskMove();
+  				ans=IsValidMove(move1,move2,p1pin);
+  				Swapping(move1,&Value[move1],&Value[move2]);
+  				DrawBoard();
+  				if(move1==9 && move2==6){
+  					printf("It's Computer Turn\n");
+  					printf("Computer Pin Position (From Which): 8\n");
+  					printf("Computer Pin Postion (To Which ): 9\n");
+  					Swapping(8,&Value[8],&Value[9]);
+  					DrawBoard();
+  					DeclareWinner(11);
+				  }else if(move1==2 && move2==3){
+				  	 printf("It's Computer Turn\n");
+  					printf("Computer Pin Position (From Which): 1\n");
+  					printf("Computer Pin Postion (To Which ): 2\n");
+  					Swapping(1,&Value[1],&Value[2]);
+  					DrawBoard();
+  					DeclareWinner(11);
+				  }else{
+				  	Cornercase7_9();
+				  }
+  					break;
+  				case 8:
+  					printf("Computer Pin-->2 Position is:7\n");
+  					Value[7]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==3){
+  						printf("Computer Pin-->3 Position is: 1\n");
+  						Value[1]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 5\n");
+  						printf("Computer Pin Position (To Which): 4\n");
+  						Swapping(5,&Value[5],&Value[4]);
+  						DrawBoard();
+  						DeclareWinner(981);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 3\n");
+					  	Value[3]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(983);
+				}	
+  					break;
+  				default :
+  					printf("Computer Pin-->2 Position is:2\n");
+  					Value[2]=cpin;
+  					DrawBoard();
+  					pos3=AskPinPos();
+  					pos3=IsValidPos(pos3);
+  					Value[pos3]=p1pin;
+  					DrawBoard();
+  					printf("It's Computer Turn:\n");
+  					if(pos3==8){
+  						printf("Computer Pin-->3 Position is: 7\n");
+  						Value[7]=cpin;
+  						printf("----------------------It's Time To MOVE Our Pin------------------\n");
+  						DrawBoard();
+  					// Moving the pins
+  						AskMove();
+  						ans=IsValidMove(move1,move2,p1pin);
+  						Swapping(move1,&Value[move1],&Value[move2]);
+  						DrawBoard();
+  						printf("It's Computer Turn:\n");
+  						printf("Computer Pin Position (From Which): 2\n");
+  						printf("Computer Pin Position (To Which): 3\n");
+  						Swapping(2,&Value[2],&Value[3]);
+  						DrawBoard();
+  						DeclareWinner(947);
+					  }else{
+					  	printf("Computer Pin-->3 Position is: 8\n");
+					  	Value[8]=cpin;
+					  	DrawBoard();
+					  	DeclareWinner(948);
+				}	
+  					break;
+  				
+			  }
+  			break;
+  		
+  		default :
+  			printf("Temperarly YOU Won The game");
+  					//code need to be write;
+  			break;
+	  }
+    
+    
+    
+    
+}
+
+
+
+void Cornercase1_3(){
+	int ans;
+	printf("It's Computer Turn\n");
+	printf("Computer Pin Position (From Which):2\n");
+	printf("Computer Pin Position (To Which): 3\n");
+	Swapping(2,&Value[2],&Value[3]);
+	DrawBoard();
+	AskMove();
+	ans=IsValidMove(move1,move2,p1pin);
+	Swapping(move1,&Value[move1],&Value[move2]);
+	DrawBoard();
+	if(move1==1 && move2==2){
+		//Automatically
+		printf("It's Computer Turn\n");
+		printf("Computer Pin Position (From Which): 5\n");
+		printf("Computer Pin Position (To Which): 4\n");
+		Swapping(5,&Value[5],&Value[4]);
+		DrawBoard();
+		printf("AUTO MOVING THE PINS\n");
+		printf(" '%s' It's Your Turn \n",p1name);
+		printf("Your Move is 6--> 5\n");
+		 Swapping(6,&Value[6],&Value[5]);
+		 DrawBoard();
+		printf(" Congartulations '%s'! YOU Won The GAME\n",p1name);
+		printf("--------------The GAME is OVER---------------\n");
+		
+	}else if (move1==1 && move2==4){
+		printf("It's Computer Turn\n");
+		printf("Computer Pin Position (From Which): 3\n");
+		printf("Computer Pin Position (To Which): 2\n");
+		Swapping(3,&Value[3],&Value[2]);
+		DrawBoard();
+		AskMove();
+		ans=IsValidMove(move1,move2,p1pin);
+		Swapping(move1,&Value[move1],&Value[move2]);
+		DrawBoard();
+		if(move1==4 && move2==1){
+			Cornercase1_3();
+		}else{
+			printf("It's Computer Turn \n");
+			printf("Computer Pin Position (From Which): 2\n");
+		    printf("Computer Pin Position (To Which): 1\n");
+		    Swapping(2,&Value[2],&Value[1]);
+		    DrawBoard();
+		    DeclareWinner(131);
+		} 
+	}else{
+		printf("It's Computer Turn\n");
+		printf("Computer Pin Position (From Which): 3\n");
+		printf("Computer Pin Position (To Which): 2\n");
+		Swapping(3,&Value[3],&Value[2]);
+		DrawBoard();
+		AskMove();
+		ans=IsValidMove(move1,move2,p1pin);
+		Swapping(move1,&Value[move1],&Value[move2]);
+		DrawBoard();
+		if(move1==7 && move2==8){
+			Cornercase1_3();
+		}else{
+			printf("It's Computer Turn\n");
+			printf("Computer Pin Position (From Which): 9\n");
+		    printf("Computer Pin Position (To Which): 8\n");
+		    Swapping(9,&Value[9],&Value[8]);
+		    DrawBoard();
+		    DeclareWinner(138);
+		}
+		
+	}
+}
+
+void Cornercase7_9(){
+	int ans;
+	printf("It's Computer Turn\n");
+	printf("Computer Pin Position (From Which):8\n");
+	printf("Computer Pin Position (To Which): 7\n");
+	Swapping(8,&Value[8],&Value[7]);
+	DrawBoard();
+	AskMove();
+	ans=IsValidMove(move1,move2,p1pin);
+	Swapping(move1,&Value[move1],&Value[move2]);
+	DrawBoard();
+	if(move1==9 && move2==8){
+		//Automatically
+		printf("It's Computer Turn\n");
+		printf("Computer Pin Position (From Which): 5\n");
+		printf("Computer Pin Position (To Which): 6\n");
+		Swapping(5,&Value[5],&Value[6]);
+		DrawBoard();
+		printf("AUTO MOVING THE PINS\n");
+		printf("'%s' It's Your Turn \n",p1name);
+		printf("Your Move is 4--> 5\n");
+		 Swapping(4,&Value[4],&Value[5]);
+		 DrawBoard();
+		printf(" Congartulations '%s'! YOU Won The GAME\n",p1name);
+		printf("--------------The GAME is OVER---------------\n");
+	}else if (move1==9 && move2==6){
+		printf("It's Computer Turn\n");
+		printf("Computer Pin Position (From Which): 7\n");
+		printf("Computer Pin Position (To Which): 8\n");
+		Swapping(3,&Value[3],&Value[2]);
+		DrawBoard();
+		AskMove();
+		ans=IsValidMove(move1,move2,p1pin);
+		Swapping(move1,&Value[move1],&Value[move2]);
+		DrawBoard();
+		if(move1==6 && move2==9){
+			Cornercase7_9();
+		}else{
+			printf("It's Computer Turn \n");
+			printf("Computer Pin Position (From Which): 8\n");
+		    printf("Computer Pin Position (To Which): 9\n");
+		    Swapping(8,&Value[8],&Value[9]);
+		    DrawBoard();
+		    DeclareWinner(799);
+		} 
+	}else{
+		printf("It's Computer Turn\n");
+		printf("Computer Pin Position (From Which): 7\n");
+		printf("Computer Pin Position (To Which): 8\n");
+		Swapping(7,&Value[7],&Value[8]);
+		DrawBoard();
+		AskMove();
+		ans=IsValidMove(move1,move2,p1pin);
+		Swapping(move1,&Value[move1],&Value[move2]);
+		DrawBoard();
+		if(move1==3 && move2==2){
+			Cornercase7_9();
+		}else{
+			printf("It's Computer Turn\n");
+			printf("Computer Pin Position (From Which): 1\n");
+		    printf("Computer Pin Position (To Which): 2\n");
+		    Swapping(1,&Value[1],&Value[2]);
+		    DrawBoard();
+		    DeclareWinner(792);
+		}
+		
+	}
+}
+
+void Cornercase3_9(){
+	int ans;
+	printf("It's Computer Turn\n");
+	printf("Computer Pin Position (From Which): 6\n");
+	printf("Computer Pin Position (To Which): 9\n");
+	Swapping(2,&Value[2],&Value[3]);
+	DrawBoard();
+	AskMove();
+	ans=IsValidMove(move1,move2,p1pin);
+	Swapping(move1,&Value[move1],&Value[move2]);
+	DrawBoard();
+	if(move1==3 && move2==6){
+		//Automatically
+		printf("It's Computer Turn\n");
+		printf("Computer Pin Position (From Which): 5\n");
+		printf("Computer Pin Position (To Which): 2\n");
+		Swapping(5,&Value[5],&Value[2]);
+		DrawBoard();
+		printf("AUTO MOVING THE PINS\n");
+		printf("'%s' It's Your Turn \n",p1name);
+		printf("Your Move is 8--> 5\n");
+		Swapping(8,&Value[8],&Value[5]);
+		DrawBoard();
+		printf(" Congartulations '%s'! YOU Won The GAME\n",p1name);
+		printf("--------------The GAME is OVER---------------\n");
+	}else if (move1==3 && move2==2){
+		printf("It's Computer Turn\n");
+		printf("Computer Pin Position (From Which): 9\n");
+		printf("Computer Pin Position (To Which): 6\n");
+		Swapping(9,&Value[6],&Value[6]);
+		DrawBoard();
+		AskMove();
+		ans=IsValidMove(move1,move2,p1pin);
+		Swapping(move1,&Value[move1],&Value[move2]);
+		DrawBoard();
+		if(move1==2 && move2==3){
+			Cornercase3_9();
+		}else{
+			printf("It's Computer Turn \n");
+			printf("Computer Pin Position (From Which): 6\n");
+		    printf("Computer Pin Position (To Which): 3\n");
+		    Swapping(6,&Value[6],&Value[3]);
+		    DrawBoard();
+		    DeclareWinner(393);
+		} 
+	}else{
+		printf("It's Computer Turn\n");
+		printf("Computer Pin Position (From Which): 9\n");
+		printf("Computer Pin Position (To Which): 6\n");
+		Swapping(9,&Value[9],&Value[6]);
+		DrawBoard();
+		AskMove();
+		ans=IsValidMove(move1,move2,p1pin);
+		Swapping(move1,&Value[move1],&Value[move2]);
+		DrawBoard();
+		if(move1==1 && move2==4){
+			Cornercase3_9();
+		}else{
+			printf("It's Computer Turn\n");
+			printf("Computer Pin Position (From Which): 7\n");
+		    printf("Computer Pin Position (To Which): 4\n");
+		    Swapping(7,&Value[7],&Value[4]);
+		    DrawBoard();
+		    DeclareWinner(399);
+		}
+		
+	}
+}
+
+void Cornercase1_7(){
+	int ans;
+	printf("It's Computer Turn\n");
+	printf("Computer Pin Position (From Which): 4\n");
+	printf("Computer Pin Position (To Which): 1\n");
+	Swapping(4,&Value[4],&Value[1]);
+	DrawBoard();
+	AskMove();
+	ans=IsValidMove(move1,move2,p1pin);
+	Swapping(move1,&Value[move1],&Value[move2]);
+	DrawBoard();
+	if(move1==7 && move2==4){
+		//Automatically
+		printf("It's Computer Turn\n");
+		printf("Computer Pin Position (From Which): 5\n");
+		printf("Computer Pin Position (To Which): 8\n");
+		Swapping(5,&Value[5],&Value[8]);
+		DrawBoard();
+		printf("AUTO MOVING THE PINS\n");
+		printf("'%s' It's Your Turn \n",p1name);
+		printf("Your Move is 2--> 5\n");
+		 Swapping(2,&Value[2],&Value[5]);
+		 DrawBoard();
+		printf(" Congartulations '%s'! YOU Won The GAME\n",p1name);
+		printf("--------------The GAME is OVER---------------\n");
+		
+	}else if (move1==7 && move2==8){
+		printf("It's Computer Turn\n");
+		printf("Computer Pin Position (From Which): 1\n");
+		printf("Computer Pin Position (To Which): 4\n");
+		Swapping(1,&Value[1],&Value[4]);
+		DrawBoard();
+		AskMove();
+		ans=IsValidMove(move1,move2,p1pin);
+		Swapping(move1,&Value[move1],&Value[move2]);
+		DrawBoard();
+		if(move1==8 && move2==7){
+			Cornercase1_7();
+		}else{
+			printf("It's Computer Turn \n");
+			printf("Computer Pin Position (From Which): 4\n");
+		    printf("Computer Pin Position (To Which): 7\n");
+		    Swapping(4,&Value[4],&Value[7]);
+		    DrawBoard();
+		    DeclareWinner(177);
+		} 
+	}else{
+		printf("It's Computer Turn\n");
+		printf("Computer Pin Position (From Which): 1\n");
+		printf("Computer Pin Position (To Which): 4\n");
+		Swapping(1,&Value[1],&Value[4]);
+		DrawBoard();
+		AskMove();
+		ans=IsValidMove(move1,move2,p1pin);
+		Swapping(move1,&Value[move1],&Value[move2]);
+		DrawBoard();
+		if(move1==9 && move2==6){
+			Cornercase1_7();
+		}else{
+			printf("It's Computer Turn\n");
+			printf("Computer Pin Position (From Which): 3\n");
+		    printf("Computer Pin Position (To Which): 6\n");
+		    Swapping(3,&Value[3],&Value[6]);
+		    DrawBoard();
+		    DeclareWinner(171);
+		}
+		
+	}
+}
+
+
+
+
+

@@ -3,7 +3,7 @@
 #include<time.h>
 // Updated Version of the Project
 char Value[]="0123456789";
-char p1name[]="Gopi";
+char p1name[]="Venkata Gopi";
 char p1pin='G';
 char cpin='C';
 char cmove1;
@@ -107,7 +107,7 @@ int IsValidMove(int p1,int p2,char pin){
 		 	AskAgain(pin);
 			}
 		 
-		break;
+		 break;
 		case 2:
 		 if(p2==1|| p2==5|| p2==3){
 			return 1;

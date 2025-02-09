@@ -12,6 +12,7 @@ char cmove1;
 char cmove2;
 int move1;
 int move2;
+char rate;
 void DrawBoard(void);
 int Checking(void);
 char IsValidPin(char);
@@ -285,6 +286,8 @@ int main(){
 				DrawBoard();
 				printf("---------'%s' Won the Game------------\n",p1name);
 				printf("------------------The Game is Over-----------------\n");
+				printf("Please Give Your Rating (from 1-5)\n");
+				scanf(" %c",&rate);
 				return 5;
 			}
 			DrawBoard();
@@ -296,6 +299,8 @@ int main(){
 				DrawBoard();
 				printf("---------------'%s' Won the Game--------------\n",p2name);
 				printf("---------------The Game is Over-------------------------\n");
+				printf("Please Give Your Rating (from 1-5)\n");
+				scanf(" %c",&rate);
 				return 5;
 			}
 		
@@ -326,6 +331,8 @@ int main(){
 				DrawBoard();
 				printf("-------------'%s' Won the Game----------------\n",p2name);
 				printf("---------------------The Game is Over-------------\n");
+				printf("Please Give Your Rating (from 1-5)\n");
+				scanf(" %c",&rate);
 				return 5;
 		   }
 		   DrawBoard();
@@ -337,6 +344,8 @@ int main(){
 		   		DrawBoard();
 		   		printf("----------------'%s' Won the Game------------------\n",p1name);
 				printf("---------------------The Game is Over-----------------------\n");
+				printf("Please Give Your Rating (from 1-5)\n");
+				scanf(" %c",&rate);
 				return 5;
 		   }
 		   
@@ -355,6 +364,8 @@ int main(){
 			if(Checking()==0){
 				printf("'%s' Won The Game\n",p1name);
 				printf("----------The Game is Over-----------\n");
+				printf("Please Give Your Rating (from 1-5)\n");
+				scanf(" %c",&rate);
 				return 5;
 				break;
 			}
@@ -376,6 +387,8 @@ int main(){
 			if(Checking()==0){
 				printf("--------------------'%s' Won The Game-----------------\n",p2name);
 				printf("----------------------The Game is Over---------------------\n");
+				printf("Please Give Your Rating (from 1-5)\n");
+				scanf(" %c",&rate);
 				return 5;
 				break;
 			}
@@ -386,6 +399,8 @@ int main(){
 		}
 		printf("'%s' Won The Game\n",p1name);
 	    printf("----------The Game is Over-----------\n");
+	    printf("Please Give Your Rating (from 1-5)\n");
+				scanf(" %c",&rate);
 		return 5;
 	}
 			
@@ -1983,6 +1998,8 @@ int main(){
   		default :
   			printf("----Coming Soon-----------");
   			printf("Temperarly YOU Won The game");
+  			printf("Please Give Your Rating (from 1-5)\n");
+				scanf(" %c",&rate);
   					//code need to be write;
   			break;
 	  }
@@ -2370,6 +2387,8 @@ int main(){
 						DrawBoard();
 						printf("-------------Computer Won the Game--------------\n");
 						printf("-----------------The Game is Over---------------\n");
+						printf("Please Give Your Rating (from 1-5)\n");
+				        scanf(" %c",&rate);
 						return 5;
 					}
 				
@@ -2560,6 +2579,8 @@ void DeclareWinner(int line){
 	if(Checking()==0){
 		printf("----------------Computer won The Game-------------\n");
 		printf("----------------The Game is Over------------------\n");
+		printf("Please Give Your Rating (from 1-5)\n");
+		scanf(" %c",&rate);
 		return ;
 		 }else {
 		printf("Error Occured in %d case check it\n",line);
@@ -2596,6 +2617,8 @@ void Cornercase7_9(){
 		 DrawBoard();
 		printf(" Congartulations '%s'! YOU Won The GAME\n",p1name);
 		printf("--------------The GAME is OVER---------------\n");
+		printf("Please Give Your Rating (from 1-5)\n");
+				scanf(" %c",&rate);
 	}else if (move1==9 && move2==6){
 		printf("It's Computer Turn\n");
 		printf("Computer Pin Position (From Which): 7\n");
@@ -2675,6 +2698,8 @@ void Cornercase3_9(){
 		DrawBoard();
 		printf(" Congartulations '%s'! YOU Won The GAME\n",p1name);
 		printf("--------------The GAME is OVER---------------\n");
+		printf("Please Give Your Rating (from 1-5)\n");
+				scanf(" %c",&rate);
 	}else if (move1==3 && move2==2){
 		printf("It's Computer Turn\n");
 		printf("Computer Pin Position (From Which): 9\n");
@@ -2751,6 +2776,8 @@ void Cornercase1_7(){
 		 DrawBoard();
 		printf(" Congartulations '%s'! YOU Won The GAME\n",p1name);
 		printf("--------------The GAME is OVER---------------\n");
+		printf("Please Give Your Rating (from 1-5)\n");
+				scanf(" %c",&rate);
 		
 	}else if (move1==7 && move2==8){
 		printf("It's Computer Turn\n");
@@ -2831,6 +2858,8 @@ void Cornercase1_3(){
 		 DrawBoard();
 		printf(" Congartulations '%s'! YOU Won The GAME\n",p1name);
 		printf("--------------The GAME is OVER---------------\n");
+		printf("Please Give Your Rating (from 1-5)\n");
+				scanf(" %c",&rate);
 		
 	}else if (move1==1 && move2==4){
 		printf("It's Computer Turn\n");
@@ -2881,4 +2910,3 @@ void Cornercase1_3(){
 		
 	}
 }
-

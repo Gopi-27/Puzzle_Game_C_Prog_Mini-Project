@@ -1,4 +1,4 @@
-# Mind_Grow_Game_Release
+# Mind_Grow_Game
 My First Mini Project Releasing
 
 # Game Overview

@@ -1,8 +1,8 @@
-# Mind_Grow_Game
+# Puzzle_Game
 My First Mini Project Releasing
 
 # Game Overview
-Welcome Mind_Grow, a fun and strategic game for two players. 
+Welcome, a fun and strategic game for two players. 
 The game has two versions: 
  1. Human vs Human 
  2. Computer vs Human

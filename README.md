@@ -1,5 +1,9 @@
 # Puzzle_Game
-My First Mini Project Releasing
+My First Mini Project Releasing,
+I didn't follow any principles and stategies.
+I built it in single file by checking each and every edge case.
+I tried out all possible ways and gave my best to make computer won the game in most of the cases.
+It will works fine every step you made.
 
 # Game Overview
 Welcome, a fun and strategic game for two players. 
